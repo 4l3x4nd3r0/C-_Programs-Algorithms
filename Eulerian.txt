@@ -1,0 +1,43 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+int a[50][50],n,e[50],ind,j,i,k,nr;
+
+void citire()
+{
+    ifstream f("Graf.txt");
+    f>>n;
+    for(i=1;i<=n;i++)
+        for(j=1;j<=n;j++)
+        f>>a[i][j];
+    f.close();
+}
+
+void ciclue(int ind)
+{
+    for(k=1;k<=n;k++)
+        if(a[e[ind]][k]==1)
+    {
+        a[e[ind]][k]=0;
+        a[k][e[ind]]=0;
+        nr++;
+        for(j=nr;j>ind;j--)
+            e[j]=e[j-1];
+        ind++;
+        e[ind]=k;
+        ciclue(ind);
+    }
+}
+
+int main()
+{
+    citire();
+    e[1]=1;
+    nr=1;
+    for(i=1;e[i];i++)
+        ciclue(i);
+    for(i=1;i<=nr;i++)
+        cout<<e[i];
+    return 0;
+}

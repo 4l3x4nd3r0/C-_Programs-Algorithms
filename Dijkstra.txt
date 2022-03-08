@@ -1,0 +1,70 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+int c[50][50],S[50],T[50],n,m,D[50],p;
+const int inf=35000;
+void matcost()
+{
+    int x,y,z;
+    ifstream f("dijk.txt");
+    f>>n>>m;
+    for(int i=1;i<=n;i++)
+    for(int j=1;j<=n;j++)
+    c[i][j]=inf;
+    for(int i=1;i<=m;i++)
+    {
+        f>>x>>y>>z;
+        c[x][y]=z;
+    }
+}
+
+void dijkstra(int p)
+{
+    int i, mini, k, ok;
+    for (i = 1; i<=n; i++) {
+        D[i] = c[p][i];
+        T[i] = p;
+        S[i] = 0;
+    }
+    T[p] = 0;
+    S[p] = 1; ok = 1;
+    while (ok) {
+        mini = inf;
+        for (i = 1; i<=n; i++)
+            if (!S[i] && mini>D[i]) {
+                mini = D[i];
+                k = i;
+            }
+        if (mini != inf) {
+            S[k] = 1;
+            for (i = 1; i<=n; i++)
+               if (!S[i] && D[i]>D[k]+c[k][i]) {
+                   D[i] = D[k]+c[k][i];
+                   T[i] = k;
+               }
+        }
+        else ok = 0;
+    }
+}
+
+void drum(int x)
+{
+    if(T[x])
+    {
+        drum(T[x]);
+        cout<<","<<x;
+    }
+    else cout<<x;
+}
+
+int main()
+{
+    matcost();
+    dijkstra(1);
+    for(int i=1;i<=n;i++)
+        {cout<<D[i]<<" ";
+        cout<<endl;}
+    drum(3);
+    return 0;
+}

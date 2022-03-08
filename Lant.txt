@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+int a[50][50],n,viz[50],p,x;
+void citire()
+{
+    ifstream f("lant.in");
+    f>>n;
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+        f>>a[i][j];
+    f.close();
+}
+
+void DF(int k)
+{
+    viz[k]=1;
+    cout<<k<<" ";
+    for(int x=1;x<=n;x++)
+        if(a[k][x]==1 && viz[x]==0)
+        DF(x);
+}
+
+int main()
+{
+    for(int i=1;i<=n;i++)
+        viz[i]=0;
+    cout<<"Dati nodul de pornire: ";
+    cin>>p;
+        citire();
+    DF(p);
+    cout<<" Cealalta extremitate a lantului: ";
+    cin>>x;
+    if(viz[x]==1) cout<<" Exista lant! ";
+    else cout<<" Nu exista lant! ";
+    return 0;
+}

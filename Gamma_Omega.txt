@@ -1,0 +1,58 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+int a[50][50], n;
+void citire()
+{
+    ifstream f("graf.txt");
+    f>>n;
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+        f>>a[i][j];
+    f.close();
+}
+
+int intern(int x)
+{
+    int g=0;
+    for(int i=1;i<=n;i++)
+        g=g+a[i][x];
+    return g;
+}
+
+int exte(int x)
+{
+    int g=0;
+    for(int i=1;i<=n;i++)
+        g=g+a[x][i];
+    return g;
+}
+
+void succ(int x)
+{
+    for(int i=1;i<=n;i++)
+        if(a[x][i]==1)
+        cout<<i<<endl;
+}
+
+void arce(int x)
+{
+    for(int i=1;i<=n;i++)
+        if(a[i][x]==1)
+        cout<<i<<" "<<x<<endl;
+}
+
+int main()
+{
+    citire();
+    for(int y=1;y<=n;y++)
+    {
+        cout<<y<<": "<<exte(y)<<" "<<intern(y)<<endl;
+        cout<<"Gamma+: ";
+        succ(y);
+        cout<<"Omega-: ";
+        arce(y);
+    }
+    return 0;
+}

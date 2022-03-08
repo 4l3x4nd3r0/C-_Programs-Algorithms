@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+#include <conio.h>
+#include <stdio.h>
+
+using namespace std;
+int a[50][50],n,m,x,y,c[20],viz[20],i,pl,j,p,u,el;
+void citire()
+{
+    int i,j;
+    ifstream f("bazine.in");
+    f>>n>>m;
+    for(i=1;i<=m;i++)
+    {
+        f>>x>>y;
+        a[x][y]=1;
+        a[y][x]=1;
+    }
+    f.close();
+}
+
+void BF(int pl)
+{
+    viz[pl]=1;
+    c[1]=pl;
+    p=1;
+    u=1;
+    while(p<=u)
+    {
+        el=c[p];
+        for(j=1;j<=n;j++)
+            if((a[el][j]==1) && viz[j]==0)
+        {
+            u=u+1;
+            c[u]=j;
+            viz[j]=1;
+        }
+        p=p+1;
+    }
+    for(i=1;i<=u;i++)
+        cout<<c[i]<<" ";
+}
+
+int main()
+{
+    int r=0;
+    citire();
+    for(i=1;i<=n;i++)
+        viz[i]=0;
+    BF(1); cout<<endl; r++;
+    int OK=0;
+    i=1;
+    while(OK==0)
+    {
+    while(viz[i]!=0 && i<=n) i++;
+    if(i<=n) {BF(i); r++;}
+    else OK=1;
+    }
+    cout<<endl<<r;
+    return 0;
+}

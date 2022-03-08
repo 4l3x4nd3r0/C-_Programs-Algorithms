@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+int a[50][50],n,viz[50],p,m;
+void citire()
+{
+    int x,y,i;
+    ifstream f("graf.txt");
+    f>>n>>m;
+    for(i=1;i<=m;i++)
+    {
+        f>>x>>y; a[x][y]=a[y][x]=1;
+    }
+    f.close();
+}
+
+void DF(int k)
+{
+    viz[k]=1;
+    cout<<k<<" ";
+    for(int x=1;x<=n;x++)
+        if(a[k][x]==1 && viz[x]==0)
+        DF(x);
+}
+
+int main()
+{
+    for(int i=1;i<=n;i++)
+        viz[i]=0;
+    cout<<"Dati nodul de pornire:";
+    cin>>p;
+        citire();
+    DF(p);
+    return 0;
+}

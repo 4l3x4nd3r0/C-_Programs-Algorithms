@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct arc
+{
+    int x,y;
+} v[20];
+int  b[20][20],n,m;
+void citire()
+{
+    ifstream f("graf.txt");
+    f>>n>>m;
+    for(int i=1;i<=m;i++)
+        f>>v[i].x>>v[i].y;
+    f.close();
+}
+
+void mat()
+{
+    for(int i=1;i<=m;i++)
+        {b[v[i].x][i]=1;
+        b[v[i].y][i]=-1;}
+}
+
+void afis()
+{
+    for(int i=1;i<=n;i++)
+    {for(int j=1;j<=m;j++)
+        cout<<b[i][j]<<" ";
+    cout<<endl;}
+    cout<<endl;
+}
+
+int intern(int k)
+{
+    int g=0;
+    for(int i=1;i<=m;i++)
+        if(b[k][i]==1)
+        g++;
+    return g;
+}
+
+int ext(int k)
+{
+    int g=0;
+    for(int i=1;i<=m;i++)
+        if(b[k][i]==-1)
+        g++;
+    return g;
+}
+
+int main()
+{
+    citire();
+    mat();
+    afis();
+    for(int k=1;k<=n;k++)
+        cout<<k<<": "<<intern(k)<<" "<<ext(k)<<endl;
+    return 0;
+}
